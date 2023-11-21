@@ -5,7 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"./routes"
+	//"./routes"
+	"github.com/khalifan-kfan/logs-app/routes"
 )
 
 func main() {

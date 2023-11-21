@@ -3,7 +3,7 @@ package routes
 import (
 	"net/http"
 
-	"../controllers"
+	"github.com/khalifan-kfan/logs-app/controllers"
 )
 
 func SetupRoutes() {
