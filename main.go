@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 
-	//"./routes"
 	"github.com/khalifan-kfan/logs-app/routes"
 )
 
