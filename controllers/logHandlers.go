@@ -1,22 +1,41 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
 func HelloHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to the OCAS analyzer!")
+	fmt.Fprintf(w, "Welcome to the OCAS logs analyzer!")
 }
 
-func PostHandler(w http.ResponseWriter, r *http.Request) {
+func HandleLogs(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	// Handle the POST request here
-	// For simplicity, let's just echo back the received data
-	message := r.FormValue("message")
-	fmt.Fprintf(w, "Received message: %s", message)
+	// Parse the JSON request body
+	var data map[string]interface{}
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	for key, value := range data {
+		fmt.Printf("Key: %s, Value: %v\n", key, value)
+	}
+
+	// Prepare a response
+	response := map[string]string{"message": "Received values successfully"}
+
+	// Encode the response to JSON and send it back
+	sendJSONResponse(w, http.StatusOK, response)
+}
+
+func sendJSONResponse(w http.ResponseWriter, statusCode int, data interface{}) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(statusCode)
+	json.NewEncoder(w).Encode(data)
 }

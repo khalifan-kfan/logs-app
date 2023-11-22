@@ -8,5 +8,5 @@ import (
 
 func SetupRoutes() {
 	http.HandleFunc("/", controllers.HelloHandler)
-	http.HandleFunc("/handle_logs", controllers.PostHandler)
+	http.HandleFunc("/api/v1/handle_logs", controllers.HandleLogs)
 }
